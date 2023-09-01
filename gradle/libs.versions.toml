@@ -1,0 +1,43 @@
+[versions]
+kotlin-logging = "5.1.0"
+slf4j = "2.0.7"
+kotlin = "1.9.10"
+dokka = "1.9.0"
+detekt = "1.23.1"
+kotest = "5.6.2"
+coroutines = "1.7.3"
+arrow = "1.2.0"
+versions = "0.47.0"
+license = "0.9.0"
+
+[libraries]
+# project dependencies
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+
+
+# test dependencies
+kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+
+# buildSrc dependencies (plugins)
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+gradle-versions = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "versions" }
+gradle-license = { module = "com.jaredsburrows:gradle-license-plugin", version.ref = "license" }
+
+[bundles]
+arrow = ["arrow-core"]
+kotlinLogging = ["kotlin-logging", "slf4j-api"]
+
+kotest = ["kotest-runner", "kotest-assertions"]
+
+coroutines = ["coroutines"]
+
+
+[plugins]
+detekt-gradle = { id = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
