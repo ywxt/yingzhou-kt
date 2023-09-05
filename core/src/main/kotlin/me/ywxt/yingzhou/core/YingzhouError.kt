@@ -10,7 +10,7 @@ inline fun <reified L : YingzhouError, reified R> Either<L, R>.unwrap(): R = whe
 }
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun getStackTrace(): List<StackTraceElement> = Thread.currentThread().stackTrace.toList()
+inline fun getStackTrace(): List<StackTraceElement> = Thread.currentThread().stackTrace.drop(1)
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Throwable?.stackTrace(): List<StackTraceElement> = this?.stackTrace?.toList() ?: getStackTrace()
@@ -21,4 +21,20 @@ sealed class YingzhouError(val message: String, val stackTrace: List<StackTraceE
     override fun toString(): String = "YingzhouError: $message\n${stackTrace.joinToString("\n")}"
 }
 
-class SocketError(message: String, stackTrace: List<StackTraceElement>) : YingzhouError(message, stackTrace)
+class SocketError(message: String, stackTrace: List<StackTraceElement>) :
+    YingzhouError(message, stackTrace) {
+    companion object {
+
+        @Suppress("NOTHING_TO_INLINE")
+        inline operator fun invoke(message: String): SocketError = SocketError(message, getStackTrace())
+    }
+}
+
+class IoError(message: String, stackTrace: List<StackTraceElement>) :
+    YingzhouError(message, stackTrace) {
+    companion object {
+
+        @Suppress("NOTHING_TO_INLINE")
+        inline operator fun invoke(message: String): IoError = IoError(message, getStackTrace())
+    }
+}
