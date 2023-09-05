@@ -65,14 +65,14 @@ val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 dependencies {
     constraints {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation(libs.findLibrary("kotlin-std-jdk").get())
     }
 
     // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation(platform(libs.findLibrary("kotlin-bom").get()))
 
     // Use the Kotlin JDK 8 standard library.
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation(libs.findLibrary("kotlin-std-jdk").get())
 
     add("detektPlugins", libs.findLibrary("detekt-formatting").get())
 }

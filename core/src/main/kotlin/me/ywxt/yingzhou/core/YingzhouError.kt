@@ -12,6 +12,11 @@ inline fun <reified L : YingzhouError, reified R> Either<L, R>.unwrap(): R = whe
 @Suppress("NOTHING_TO_INLINE")
 inline fun getStackTrace(): List<StackTraceElement> = Thread.currentThread().stackTrace.toList()
 
+@Suppress("NOTHING_TO_INLINE")
+inline fun Throwable?.stackTrace(): List<StackTraceElement> = this?.stackTrace?.toList() ?: getStackTrace()
+
+inline fun Throwable?.message(f: () -> String): String = this?.message ?: f()
+
 sealed class YingzhouError(val message: String, val stackTrace: List<StackTraceElement>) {
     override fun toString(): String = "YingzhouError: $message\n${stackTrace.joinToString("\n")}"
 }
