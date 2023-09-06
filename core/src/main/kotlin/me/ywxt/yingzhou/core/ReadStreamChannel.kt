@@ -64,13 +64,14 @@ class ReadStreamChannel(private val channel: ReceiveChannel<Buffer>) : ReceiveCh
     suspend fun readBytes(length: Int): Either<IoError, ByteArray> = mutex.withLock {
         if (length < 0) return Either.Left(IoError("length must be positive"))
         val bytes = ByteArray(length)
-        val readLength = 0
+        var readLength = 0
         while (readLength < length) {
             checkBuffer()
-            val offset = bufferOffset
-            val read = minOf(length - readLength, buffer!!.length() - offset)
-            buffer!!.getBytes(offset, offset + read).copyInto(bytes, readLength)
-            bufferOffset = offset + read
+            val bufferLength = buffer!!.length()
+            val read = minOf(length - readLength, bufferLength - bufferOffset)
+            buffer!!.getBytes(bufferOffset, bufferOffset + read, bytes, readLength)
+            readLength += read
+            bufferOffset += read
         }
         return bytes.right()
     }
