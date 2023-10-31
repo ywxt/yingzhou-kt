@@ -10,6 +10,6 @@ plugins {
 dependencies {
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.kotlinLogging)
-    implementation(libs.bundles.vertx)
+    implementation(libs.bundles.ktor)
     implementation(libs.bundles.coroutines)
 }
