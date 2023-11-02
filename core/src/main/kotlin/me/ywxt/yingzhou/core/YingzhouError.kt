@@ -15,6 +15,9 @@ inline fun getStackTrace(): List<StackTraceElement> = Thread.currentThread().sta
 @Suppress("NOTHING_TO_INLINE")
 inline fun Throwable?.stackTrace(): List<StackTraceElement> = this?.stackTrace?.toList() ?: getStackTrace()
 
+@Suppress("NOTHING_TO_INLINE")
+inline fun Throwable?.message(m: String): String = this?.message ?: m
+
 inline fun Throwable?.message(f: () -> String): String = this?.message ?: f()
 
 sealed class YingzhouError(val message: String, val stackTrace: List<StackTraceElement>) {
